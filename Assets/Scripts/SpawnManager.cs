@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawnManager : MonoBehaviour
+{
+    // private IEnumerator coroutine;
+    [SerializeField]
+    private GameObject _enemyPrefab;
+    [SerializeField]
+    private float _spawnTimer = 3f;
+    [SerializeField]
+    private float _enemySpawnHeight = 8f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // coroutine = SpawnRoutine();
+        // StartCoroutine(coroutine);
+        StartCoroutine(SpawnRoutine());
+    }
+
+    // Create a coroutine of type IEnumerator -- Yield Events
+    // infinite while loop
+    IEnumerator SpawnRoutine()
+    {
+        yield return null; // wait 1 frame
+
+        // Instantiate enemy prefab
+        // Yield wait for 5 seconds
+        while (true)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), _enemySpawnHeight, 0);
+            Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(_spawnTimer);
+        }
+        // After this never runs
+    }
+}
