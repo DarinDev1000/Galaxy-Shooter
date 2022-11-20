@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private float _sidePositionLimit = 11.3f;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private Vector2 _laserSpawnOffset = new(0, 0.8f);
 
     // Start is called before the first frame update
     void Start()
@@ -62,8 +64,10 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
         {
+            // Use laserSpawnOffset
+            Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
             // Quaternion.identity = default rotation
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
         }
     }
 }
