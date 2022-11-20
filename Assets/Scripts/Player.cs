@@ -29,6 +29,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateMovement();
+    }
+
+    void CalculateMovement()
+    {
         // FYI: Keyboard is not on, off. It ramps up/down this value
         // Controller is instant
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -37,17 +42,7 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(_speed * Time.deltaTime * direction);
 
-        // If player position on the y is greater than 0
-        // y position = 0
-        if (transform.position.y > _topPositionLimit)
-        {
-            // transform.position.z should already be 0
-            transform.position = new Vector3(transform.position.x, _topPositionLimit, 0);
-        }
-        else if (transform.position.y < _bottomPositionLimit)
-        {
-            transform.position = new Vector3(transform.position.x, _bottomPositionLimit, 0);
-        }
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, _bottomPositionLimit, _topPositionLimit), 0);
 
         // Wrap the player around the side
         if (transform.position.x > _sidePositionLimit)
