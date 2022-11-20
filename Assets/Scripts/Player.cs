@@ -32,12 +32,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            // Quaternion.identity = default rotation
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-        }
+        HandleFire();
     }
 
     void CalculateMovement()
@@ -60,6 +55,15 @@ public class Player : MonoBehaviour
         else if (transform.position.x < -_sidePositionLimit)
         {
             transform.position = new Vector3(_sidePositionLimit, transform.position.y, 0);
+        }
+    }
+
+    void HandleFire()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            // Quaternion.identity = default rotation
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
         }
     }
 }
