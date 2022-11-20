@@ -315,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4185647255982060042, guid: d59d88f7cbda01e4c86c1c1493630ae1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4185647255982060042, guid: d59d88f7cbda01e4c86c1c1493630ae1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -477,6 +477,7 @@ MonoBehaviour:
   _laserPrefab: {fileID: 4081680752698359688, guid: 11feedf05c7358c45a1f1b8d71708aec, type: 3}
   _laserSpawnOffset: {x: 0, y: 0.8}
   _laserFireRate: 0.15
+  _lives: 3
 --- !u!1001 &1410325920
 PrefabInstance:
   m_ObjectHideFlags: 0

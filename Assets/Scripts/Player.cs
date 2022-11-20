@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _laserFireRate = 0.15f;
     private float _laserCanFire = -1;
+    [SerializeField]
+    private int _lives = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -83,5 +85,17 @@ public class Player : MonoBehaviour
         Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
         // Quaternion.identity = default rotation
         Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
+    }
+
+    public void Damage()
+    {
+        // Remove 1 life
+        _lives--;
+
+        // Check if dead
+        if (_lives <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

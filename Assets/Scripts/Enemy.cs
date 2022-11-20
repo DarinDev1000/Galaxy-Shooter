@@ -42,7 +42,12 @@ public class Enemy : MonoBehaviour
         // If other is player, destroy us and damage player
         if (other.CompareTag("Player"))
         {
-            // TODO: Damage player first
+            // Damage player first
+            Player player = other.transform.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
 
             // Make sure to do everything else before destroying self
             Destroy(this.gameObject);
