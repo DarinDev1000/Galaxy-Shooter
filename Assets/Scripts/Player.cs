@@ -23,6 +23,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(_speed * Time.deltaTime * Vector3.right);
+        // FYI: Keyboard is not on, off. It ramps up/down this value
+        // Controller is instant
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        // 0.7 * 3.5f * 0.016 * new Vector3(1, 0, 0)
+        transform.Translate(horizontalInput * _speed * Time.deltaTime * Vector3.right);
+
     }
 }
