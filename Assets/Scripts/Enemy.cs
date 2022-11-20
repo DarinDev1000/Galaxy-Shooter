@@ -36,4 +36,24 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, _spawnHeight, 0);
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // If other is player, destroy us and damage player
+        if (other.CompareTag("Player"))
+        {
+            // TODO: Damage player first
+
+            // Make sure to do everything else before destroying self
+            Destroy(this.gameObject);
+        }
+
+        // If other is laser, destroy us and destroy laser
+        if (other.CompareTag("Laser"))
+        {
+            Destroy(other.gameObject);
+            // Make sure to do everything else before destroying self
+            Destroy(this.gameObject);
+        }
+    }
 }
