@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _sidePositionLimit = 11.3f;
     [SerializeField]
+    private GameObject _laserContainer;
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private Vector2 _laserSpawnOffset = new(0, 0.8f);
@@ -84,7 +86,8 @@ public class Player : MonoBehaviour
         // Use laserSpawnOffset
         Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
         // Quaternion.identity = default rotation
-        Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
+        GameObject newLaser = Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
+        newLaser.transform.SetParent(_laserContainer.transform);
     }
 
     public void Damage()

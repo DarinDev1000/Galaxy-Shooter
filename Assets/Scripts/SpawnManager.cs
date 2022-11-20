@@ -6,6 +6,8 @@ public class SpawnManager : MonoBehaviour
 {
     // private IEnumerator coroutine;
     [SerializeField]
+    private GameObject _enemyContainer;
+    [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
     private float _spawnTimer = 3f;
@@ -31,7 +33,8 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), _enemySpawnHeight, 0);
-            Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            newEnemy.transform.SetParent(_enemyContainer.transform);
             yield return new WaitForSeconds(_spawnTimer);
         }
         // After this never runs
