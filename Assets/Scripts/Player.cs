@@ -35,8 +35,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Take the current position = new position(0, 0, 0)
-        transform.position = Vector3.zero;
+        // Zero player position on start
+        // transform.position = Vector3.zero;
+
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         if (_spawnManager == null)
         {

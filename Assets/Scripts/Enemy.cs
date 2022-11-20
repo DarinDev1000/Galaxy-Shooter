@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         // If other is player, destroy us and damage player
         if (other.CompareTag("Player"))
