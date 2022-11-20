@@ -11,7 +11,13 @@ public class Player : MonoBehaviour
     // 3 variable name. Standard is to underscore private variables
     // (4) optional value assigned
     [SerializeField]
-    private float _speed = 3.5f;
+    private float _speed = 5f;
+    [SerializeField]
+    private float _topPositionLimit = 0f;
+    [SerializeField]
+    private float _bottomPositionLimit = -3.8f;
+    [SerializeField]
+    private float _sidePositionLimit = 11.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,5 +36,27 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(_speed * Time.deltaTime * direction);
+
+        // If player position on the y is greater than 0
+        // y position = 0
+        if (transform.position.y > _topPositionLimit)
+        {
+            // transform.position.z should already be 0
+            transform.position = new Vector3(transform.position.x, _topPositionLimit, 0);
+        }
+        else if (transform.position.y < _bottomPositionLimit)
+        {
+            transform.position = new Vector3(transform.position.x, _bottomPositionLimit, 0);
+        }
+
+        // Wrap the player around the side
+        if (transform.position.x > _sidePositionLimit)
+        {
+            transform.position = new Vector3(-_sidePositionLimit, transform.position.y, 0);
+        }
+        else if (transform.position.x < -_sidePositionLimit)
+        {
+            transform.position = new Vector3(_sidePositionLimit, transform.position.y, 0);
+        }
     }
 }
