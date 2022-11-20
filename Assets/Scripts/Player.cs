@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     private float _bottomPositionLimit = -3.8f;
     [SerializeField]
     private float _sidePositionLimit = 11.3f;
+    [SerializeField]
+    private GameObject _laserPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            // Quaternion.identity = default rotation
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     void CalculateMovement()
