@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     private GameObject _laserPrefab;
     [SerializeField]
     private Vector2 _laserSpawnOffset = new(0, 0.8f);
+    [SerializeField]
+    private float _laserFireRate = 0.15f;
+    private float _laserCanFire = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        HandleFire();
+        TryFireLaser();
     }
 
     void CalculateMovement()
@@ -60,14 +63,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HandleFire()
+    void TryFireLaser()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+        // Check player input
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
         {
-            // Use laserSpawnOffset
-            Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
-            // Quaternion.identity = default rotation
-            Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
+            // Check fire cooldown
+            if (Time.time > _laserCanFire)
+            {
+                _laserCanFire = Time.time + _laserFireRate;
+                FireLaser();
+            }
         }
+    }
+
+    void FireLaser()
+    {
+        // Use laserSpawnOffset
+        Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
+        // Quaternion.identity = default rotation
+        Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
     }
 }

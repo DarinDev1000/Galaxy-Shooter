@@ -416,3 +416,5 @@ MonoBehaviour:
   _bottomPositionLimit: -3.8
   _sidePositionLimit: 11.3
   _laserPrefab: {fileID: 4081680752698359688, guid: 11feedf05c7358c45a1f1b8d71708aec, type: 3}
+  _laserSpawnOffset: {x: 0, y: 0.8}
+  _laserFireRate: 0.15
