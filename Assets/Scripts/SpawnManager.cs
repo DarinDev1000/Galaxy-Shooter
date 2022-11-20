@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _enemySpawnHeight = 8f;
 
+    private bool _spawningActive = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,7 @@ public class SpawnManager : MonoBehaviour
 
         // Instantiate enemy prefab
         // Yield wait for 5 seconds
-        while (true)
+        while (_spawningActive)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), _enemySpawnHeight, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
@@ -38,5 +40,15 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnTimer);
         }
         // After this never runs
+    }
+
+    public void StartSpawning()
+    {
+        _spawningActive = true;
+    }
+
+    public void StopSpawning()
+    {
+        _spawningActive = false;
     }
 }
