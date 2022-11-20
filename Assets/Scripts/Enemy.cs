@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4f;
     [SerializeField]
-    private float _spawnHeight = 11f;
+    private float _spawnHeight = 8f;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +30,10 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -5f)
         {
-            transform.position = new Vector3(0, 7, 0);
+            // Random.Range(-8, 9) int max value exclusive
+            // Random.Range(-8f, 8f) float max value inclusive
+            float randomX = Random.Range(-8f, 8f);
+            transform.position = new Vector3(randomX, _spawnHeight, 0);
         }
     }
 }
