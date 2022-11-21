@@ -2,59 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Powerup : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 4f;
+    private float _speed = 3f;
     [SerializeField]
     private float _spawnHeight = 8f;
+    [SerializeField]
+    private float _cleanupHeight = -5f;
 
     // Update is called once per frame
     void Update()
     {
+
         CalculateMovement();
 
     }
 
     void CalculateMovement()
     {
-        // Move down at 4 m/sec
-        // Check for if bottom of screen, respawn at top
-        // with a new random x position
+        // Move down at speed
+        // When we leave screen, destroy this object
 
-        // Translate enemy down
+        // Translate powerup down
         Vector3 direction = Vector3.down;
         transform.Translate(_speed * Time.deltaTime * direction);
 
-        if (transform.position.y < -5f)
+        if (transform.position.y < _cleanupHeight)
         {
-            // Random.Range(-8, 9) int max value exclusive
-            // Random.Range(-8f, 8f) float max value inclusive
-            float randomX = Random.Range(-8f, 8f);
-            transform.position = new Vector3(randomX, _spawnHeight, 0);
+            Destroy(gameObject);
         }
     }
 
+    // OnTriggerCollision
+    // Only be collectable by the player (use tags)
+    // on collected, destroy
     void OnTriggerEnter2D(Collider2D other)
     {
         // If other is player, destroy us and damage player
         if (other.CompareTag("Player"))
         {
-            // Damage player first
+            // Give player powerup
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {
-                player.Damage();
+                player.EnableTripleLaserPowerup();
             }
 
-            // Make sure to do everything else before destroying self
-            Destroy(this.gameObject);
-        }
-
-        // If other is laser, destroy us and destroy laser
-        if (other.CompareTag("Laser"))
-        {
-            Destroy(other.gameObject);
             // Make sure to do everything else before destroying self
             Destroy(this.gameObject);
         }

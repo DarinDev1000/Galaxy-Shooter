@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleLaserPrefab;
     [SerializeField]
-    private Vector2 _laserSpawnOffset = new(0, 0.8f);
+    private Vector2 _laserSpawnOffset = new(0, 1.0f);
     [SerializeField]
     private float _laserFireRate = 0.15f;
     private float _laserCanFire = -1;
@@ -126,5 +126,10 @@ public class Player : MonoBehaviour
 
             Destroy(this.gameObject);
         }
+    }
+
+    public void EnableTripleLaserPowerup()
+    {
+        _tripleLaserActive = true;
     }
 }
