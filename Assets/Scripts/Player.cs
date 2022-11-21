@@ -23,12 +23,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _tripleLaserPrefab;
+    [SerializeField]
     private Vector2 _laserSpawnOffset = new(0, 0.8f);
     [SerializeField]
     private float _laserFireRate = 0.15f;
     private float _laserCanFire = -1;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private bool _tripleLaserActive = false;
 
     private SpawnManager _spawnManager;
 
@@ -91,11 +95,21 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        // Use laserSpawnOffset
-        Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
-        // Quaternion.identity = default rotation
-        GameObject newLaser = Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
-        newLaser.transform.SetParent(_laserContainer.transform);
+        // If tripleLaser active, fire triple
+        if (_tripleLaserActive)
+        {
+            // DON'T user _laserSpawnOffset
+            GameObject newTripleLaser = Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            newTripleLaser.transform.SetParent(_laserContainer.transform);
+        }
+        else
+        {
+            // Use _laserSpawnOffset
+            Vector3 spawnOffset = new(_laserSpawnOffset.x, _laserSpawnOffset.y, 0);
+            // Quaternion.identity = default rotation
+            GameObject newLaser = Instantiate(_laserPrefab, transform.position + spawnOffset, Quaternion.identity);
+            newLaser.transform.SetParent(_laserContainer.transform);
+        }
     }
 
     public void Damage()
