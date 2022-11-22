@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
-    private bool _tripleLaserActive = false;
+    private List<float> _tripleLaserActive = new();
 
     private SpawnManager _spawnManager;
 
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         // If tripleLaser active, fire triple
-        if (_tripleLaserActive)
+        if (_tripleLaserActive.Count > 0)
         {
             // DON'T user _laserSpawnOffset
             GameObject newTripleLaser = Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
@@ -130,6 +130,18 @@ public class Player : MonoBehaviour
 
     public void EnableTripleLaserPowerup()
     {
-        _tripleLaserActive = true;
+        float cooldownTime = 5.0f;
+        _tripleLaserActive.Add(cooldownTime); // Currently the number value does nothing. We just check length
+        // start the power down coroutine for triple laser
+        StartCoroutine(TripleLaserPowerDownRoutine(cooldownTime));
+    }
+
+    // IEnumerator TripleLaserPowerDownRoutine()
+    // Wait 5 seconds
+    // set _tripleLaserActive to false
+    IEnumerator TripleLaserPowerDownRoutine(float cooldownTime)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        _tripleLaserActive.RemoveAt(0);
     }
 }
