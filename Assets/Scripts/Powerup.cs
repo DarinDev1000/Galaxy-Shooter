@@ -9,6 +9,23 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _cleanupHeight = -5f;
 
+    // ID for powerups
+    // 0 = TripleLaser
+    // 1 = Speed
+    // 2 = Shields
+    [SerializeField]
+    private int _powerupId;
+    [SerializeField]
+    private PowerupEnum _powerupType;
+
+
+    public enum PowerupEnum
+    {
+        TripleLaser,
+        Speed,
+        Shields
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -44,7 +61,19 @@ public class Powerup : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {
-                player.EnableTripleLaserPowerup();
+                // Switch powerup type
+                switch (_powerupType)
+                {
+                    case PowerupEnum.TripleLaser:
+                        player.EnableTripleLaserPowerup();
+                        break;
+                    case PowerupEnum.Speed:
+                        // player.EnableSpeedPowerup();
+                        break;
+                    case PowerupEnum.Shields:
+                        // player.EnableShieldPowerup();
+                        break;
+                }
             }
 
             // Make sure to do everything else before destroying self
