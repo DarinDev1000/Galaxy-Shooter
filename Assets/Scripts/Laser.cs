@@ -27,6 +27,13 @@ public class Laser : MonoBehaviour
     {
         if (transform.position.y > _cleanupHeight)
         {
+            // Check if laser is tripleShot
+            // Destroy parent if tripleShot
+            if (transform.parent.name == "Triple_Laser(Clone)")
+            {
+                Destroy(transform.parent.gameObject);
+            }
+
             Destroy(this.gameObject);
         }
     }
