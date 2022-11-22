@@ -7,8 +7,6 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3f;
     [SerializeField]
-    private float _spawnHeight = 8f;
-    [SerializeField]
     private float _cleanupHeight = -5f;
 
     // Update is called once per frame
