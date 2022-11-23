@@ -18,15 +18,17 @@ public class SpawnManager : MonoBehaviour
     private float _enemySpawnHeight = 8f;
 
     [SerializeField]
-    private GameObject _tripleLaserPowerupContainer;
+    private GameObject _powerupContainer;
     [SerializeField]
     private GameObject _tripleLaserPowerupPrefab;
     [SerializeField]
-    private float _tripleLaserPowerupSpawnHeight = 8f;
+    private GameObject _speedPowerupPrefab;
     [SerializeField]
-    private float _tripleLaserPowerupSpawnCooldownMin = 3f;
+    private float _powerupSpawnHeight = 8f;
     [SerializeField]
-    private float _tripleLaserPowerupSpawnCooldownMax = 7f;
+    private float _powerupSpawnCooldownMin = 3f;
+    [SerializeField]
+    private float _powerupSpawnCooldownMax = 7f;
 
     private bool _spawningActive = true;
 
@@ -63,12 +65,27 @@ public class SpawnManager : MonoBehaviour
         while (_spawningActive)
         {
             // Spawn powerup
-            Vector3 posToSpawn = new Vector3(Random.Range(-_spawnWidth, _spawnWidth), _tripleLaserPowerupSpawnHeight, 0);
-            GameObject newPowerup = Instantiate(_tripleLaserPowerupPrefab, posToSpawn, Quaternion.identity);
-            newPowerup.transform.SetParent(_tripleLaserPowerupContainer.transform);
+            int powerupId = new System.Random().Next(0, 2);
+            GameObject powerupPrefab;
+            switch (powerupId)
+            {
+                case 0:
+                    powerupPrefab = _tripleLaserPowerupPrefab;
+                    break;
+                case 1:
+                    powerupPrefab = _speedPowerupPrefab;
+                    break;
+                default:
+                    Debug.LogError("Default Case Spawner");
+                    powerupPrefab = _tripleLaserPowerupPrefab;
+                    break;
+            }
+            Vector3 posToSpawn = new Vector3(Random.Range(-_spawnWidth, _spawnWidth), _powerupSpawnHeight, 0);
+            GameObject newPowerup = Instantiate(powerupPrefab, posToSpawn, Quaternion.identity);
+            newPowerup.transform.SetParent(_powerupContainer.transform);
 
             // Wait to spawn next powerup
-            float cooldownTimer = Random.Range(_tripleLaserPowerupSpawnCooldownMin, _tripleLaserPowerupSpawnCooldownMax);
+            float cooldownTimer = Random.Range(_powerupSpawnCooldownMin, _powerupSpawnCooldownMax);
             yield return new WaitForSeconds(cooldownTimer);
         }
     }

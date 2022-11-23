@@ -74,7 +74,7 @@ public class Powerup : MonoBehaviour
                         // player.EnableShieldPowerup();
                         break;
                     default:
-                        print("Default Case");
+                        Debug.LogError("Default Case Powerup");
                         break;
                 }
             }

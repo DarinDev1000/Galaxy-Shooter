@@ -188,11 +188,12 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 4185647255982060046, guid: d59d88f7cbda01e4c86c1c1493630ae1, type: 3}
   _spawnTimer: 1
   _enemySpawnHeight: 8
-  _tripleLaserPowerupContainer: {fileID: 1782066179}
+  _powerupContainer: {fileID: 1782066179}
   _tripleLaserPowerupPrefab: {fileID: 5803694665855013578, guid: d7c579a51cfaf6f4191047b3a573e0b6, type: 3}
-  _tripleLaserPowerupSpawnHeight: 8
-  _tripleLaserPowerupSpawnCooldownMin: 3
-  _tripleLaserPowerupSpawnCooldownMax: 7
+  _speedPowerupPrefab: {fileID: 1508493140519426632, guid: 920979ba2725e0e4dbbef99788b647cf, type: 3}
+  _powerupSpawnHeight: 8
+  _powerupSpawnCooldownMin: 3
+  _powerupSpawnCooldownMax: 7
 --- !u!4 &126937577
 Transform:
   m_ObjectHideFlags: 0
@@ -702,7 +703,8 @@ MonoBehaviour:
   _laserSpawnOffset: {x: 0, y: 1}
   _laserFireRate: 0.15
   _lives: 3
-  _tripleLaserActive: []
+  _powerupCooldownTime: 5
+  _speedPowerupMultiplier: 2
 --- !u!61 &2061015876
 BoxCollider2D:
   m_ObjectHideFlags: 0
