@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
-    private List<float> _tripleLaserActive = new();
+    private float _powerupCooldownTime = 5f;
+    private List<float> _tripleLaserActive = new(); // Currently the number value does nothing. We just check length
+    private List<float> _speedPowerupActive = new(); // Currently the number value does nothing. We just check length
+    [SerializeField]
+    private float _speedPowerupMultiplier = 2.0f;
 
     private SpawnManager _spawnManager;
 
@@ -63,8 +68,14 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        float speedPowerupMultiplier = 1f;
+        if (_speedPowerupActive.Count > 0)
+        {
+            speedPowerupMultiplier = _speedPowerupMultiplier;
+        }
+
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        transform.Translate(_speed * Time.deltaTime * direction);
+        transform.Translate(_speed * speedPowerupMultiplier * Time.deltaTime * direction);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, _bottomPositionLimit, _topPositionLimit), 0);
 
@@ -128,12 +139,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Triple Laser Powerup
     public void EnableTripleLaserPowerup()
     {
-        float cooldownTime = 5.0f;
-        _tripleLaserActive.Add(cooldownTime); // Currently the number value does nothing. We just check length
+        _tripleLaserActive.Add(_powerupCooldownTime); // Currently the number value does nothing. We just check length
         // start the power down coroutine for triple laser
-        StartCoroutine(TripleLaserPowerDownRoutine(cooldownTime));
+        StartCoroutine(TripleLaserPowerDownRoutine(_powerupCooldownTime));
     }
 
     // IEnumerator TripleLaserPowerDownRoutine()
@@ -142,6 +153,19 @@ public class Player : MonoBehaviour
     IEnumerator TripleLaserPowerDownRoutine(float cooldownTime)
     {
         yield return new WaitForSeconds(cooldownTime);
-        _tripleLaserActive.RemoveAt(0);
+        _tripleLaserActive = _tripleLaserActive.Skip(1).ToList();
+    }
+
+    // Speed Powerup
+    public void EnableSpeedPowerup()
+    {
+        _speedPowerupActive.Add(_powerupCooldownTime); // Currently the number value does nothing. We just check length
+        StartCoroutine(SpeedShutDownRoutine(_powerupCooldownTime));
+    }
+
+    IEnumerator SpeedShutDownRoutine(float cooldownTime)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        _speedPowerupActive = _speedPowerupActive.Skip(1).ToList();
     }
 }

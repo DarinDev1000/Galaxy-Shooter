@@ -68,10 +68,13 @@ public class Powerup : MonoBehaviour
                         player.EnableTripleLaserPowerup();
                         break;
                     case PowerupEnum.Speed:
-                        // player.EnableSpeedPowerup();
+                        player.EnableSpeedPowerup();
                         break;
                     case PowerupEnum.Shields:
                         // player.EnableShieldPowerup();
+                        break;
+                    default:
+                        print("Default Case");
                         break;
                 }
             }

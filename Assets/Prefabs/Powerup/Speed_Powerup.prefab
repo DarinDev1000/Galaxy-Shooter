@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1508493140519426634
 SpriteRenderer:
@@ -169,5 +169,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _cleanupHeight: -5
-  powerupId: 1
-  powerupType: 1
+  _powerupId: 0
+  _powerupType: 1
