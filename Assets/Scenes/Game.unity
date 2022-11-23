@@ -186,15 +186,16 @@ MonoBehaviour:
   _spawnWidth: 8
   _enemyContainer: {fileID: 114472719}
   _enemyPrefab: {fileID: 4185647255982060046, guid: d59d88f7cbda01e4c86c1c1493630ae1, type: 3}
-  _spawnTimer: 1
+  _enemySpawnTimer: 1
   _enemySpawnHeight: 8
   _powerupContainer: {fileID: 1782066179}
   _powerupPrefabs:
   - {fileID: 5803694665855013578, guid: d7c579a51cfaf6f4191047b3a573e0b6, type: 3}
   - {fileID: 1508493140519426632, guid: 920979ba2725e0e4dbbef99788b647cf, type: 3}
+  - {fileID: 2957666508934290418, guid: c028b103d2f95ad47941b04d6a18245e, type: 3}
   _powerupSpawnHeight: 8
-  _powerupSpawnCooldownMin: 3
-  _powerupSpawnCooldownMax: 7
+  _powerupSpawnTimerMin: 3
+  _powerupSpawnTimerMax: 7
 --- !u!4 &126937577
 Transform:
   m_ObjectHideFlags: 0

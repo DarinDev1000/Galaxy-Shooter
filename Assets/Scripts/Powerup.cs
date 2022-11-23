@@ -14,10 +14,7 @@ public class Powerup : MonoBehaviour
     // 1 = Speed
     // 2 = Shields
     [SerializeField]
-    private int _powerupId;
-    [SerializeField]
     private PowerupEnum _powerupType;
-
 
     public enum PowerupEnum
     {
@@ -71,7 +68,7 @@ public class Powerup : MonoBehaviour
                         player.EnableSpeedPowerup();
                         break;
                     case PowerupEnum.Shields:
-                        // player.EnableShieldPowerup();
+                        player.EnableShieldPowerup();
                         break;
                     default:
                         Debug.LogError("Default Case Powerup");

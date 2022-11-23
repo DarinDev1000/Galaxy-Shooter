@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     private float _powerupCooldownTime = 5f;
     private List<float> _tripleLaserActive = new(); // Currently the number value does nothing. We just check length
     private List<float> _speedPowerupActive = new(); // Currently the number value does nothing. We just check length
+    private List<float> _shieldPowerupActive = new(); // Currently the number value does nothing. We just check length
     [SerializeField]
     private float _speedPowerupMultiplier = 2.0f;
 
@@ -125,8 +126,17 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        // Remove 1 life
-        _lives--;
+        if (_speedPowerupActive.Count() > 0)
+        {
+            _speedPowerupActive = _speedPowerupActive.Skip(1).ToList();
+            // Does the coroutine still remove after this?
+            // StopCoroutine(SpeedShutDownRoutine(_powerupCooldownTime));
+        }
+        else
+        {
+            // Remove 1 life
+            _lives--;
+        }
 
         // Check if dead
         if (_lives <= 0)
@@ -167,5 +177,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldownTime);
         _speedPowerupActive = _speedPowerupActive.Skip(1).ToList();
+    }
+
+    // Shield Powerup
+    public void EnableShieldPowerup()
+    {
+        _shieldPowerupActive.Add(_powerupCooldownTime); // Currently the number value does nothing. We just check length
+        // StartCoroutine(SpeedShutDownRoutine(_powerupCooldownTime));
     }
 }

@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
-    private float _spawnTimer = 3f;
+    private float _enemySpawnTimer = 1f;
     [SerializeField]
     private float _enemySpawnHeight = 8f;
 
@@ -24,9 +24,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _powerupSpawnHeight = 8f;
     [SerializeField]
-    private float _powerupSpawnCooldownMin = 3f;
+    private float _powerupSpawnTimerMin = 3f;
     [SerializeField]
-    private float _powerupSpawnCooldownMax = 7f;
+    private float _powerupSpawnTimerMax = 7f;
 
     private bool _spawningActive = true;
     private readonly System.Random rnd = new System.Random();
@@ -53,7 +53,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 posToSpawn = new Vector3(Random.Range(-_spawnWidth, _spawnWidth), _enemySpawnHeight, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.SetParent(_enemyContainer.transform);
-            yield return new WaitForSeconds(_spawnTimer);
+            yield return new WaitForSeconds(_enemySpawnTimer);
         }
         // After this never runs
     }
@@ -64,15 +64,15 @@ public class SpawnManager : MonoBehaviour
         while (_spawningActive)
         {
             // Select random powerup
-            int powerupId = rnd.Next(0, _powerupPrefabs.Length);
-            GameObject randomPowerupPrefab = _powerupPrefabs[powerupId];
+            int powerupArrayId = rnd.Next(0, _powerupPrefabs.Length);
+            GameObject randomPowerupPrefab = _powerupPrefabs[powerupArrayId];
             // Spawn powerup
             Vector3 posToSpawn = new Vector3(Random.Range(-_spawnWidth, _spawnWidth), _powerupSpawnHeight, 0);
             GameObject newPowerup = Instantiate(randomPowerupPrefab, posToSpawn, Quaternion.identity);
             newPowerup.transform.SetParent(_powerupContainer.transform);
 
             // Wait to spawn next powerup
-            float cooldownTimer = Random.Range(_powerupSpawnCooldownMin, _powerupSpawnCooldownMax);
+            float cooldownTimer = Random.Range(_powerupSpawnTimerMin, _powerupSpawnTimerMax);
             yield return new WaitForSeconds(cooldownTimer);
         }
     }
