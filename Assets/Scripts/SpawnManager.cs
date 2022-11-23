@@ -20,9 +20,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _powerupContainer;
     [SerializeField]
-    private GameObject _tripleLaserPowerupPrefab;
-    [SerializeField]
-    private GameObject _speedPowerupPrefab;
+    private GameObject[] _powerupPrefabs;
     [SerializeField]
     private float _powerupSpawnHeight = 8f;
     [SerializeField]
@@ -31,6 +29,7 @@ public class SpawnManager : MonoBehaviour
     private float _powerupSpawnCooldownMax = 7f;
 
     private bool _spawningActive = true;
+    private readonly System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
     void Start()
@@ -64,24 +63,12 @@ public class SpawnManager : MonoBehaviour
         // Every 3 - 7 seconds, spawn in a powerup
         while (_spawningActive)
         {
+            // Select random powerup
+            int powerupId = rnd.Next(0, _powerupPrefabs.Length);
+            GameObject randomPowerupPrefab = _powerupPrefabs[powerupId];
             // Spawn powerup
-            int powerupId = new System.Random().Next(0, 2);
-            GameObject powerupPrefab;
-            switch (powerupId)
-            {
-                case 0:
-                    powerupPrefab = _tripleLaserPowerupPrefab;
-                    break;
-                case 1:
-                    powerupPrefab = _speedPowerupPrefab;
-                    break;
-                default:
-                    Debug.LogError("Default Case Spawner");
-                    powerupPrefab = _tripleLaserPowerupPrefab;
-                    break;
-            }
             Vector3 posToSpawn = new Vector3(Random.Range(-_spawnWidth, _spawnWidth), _powerupSpawnHeight, 0);
-            GameObject newPowerup = Instantiate(powerupPrefab, posToSpawn, Quaternion.identity);
+            GameObject newPowerup = Instantiate(randomPowerupPrefab, posToSpawn, Quaternion.identity);
             newPowerup.transform.SetParent(_powerupContainer.transform);
 
             // Wait to spawn next powerup
