@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     private List<float> _shieldPowerupActive = new(); // Currently the number value does nothing. We just check length
     [SerializeField]
     private float _speedPowerupMultiplier = 2.0f;
+    [SerializeField]
+    private GameObject _shieldVisualizer;
 
     private SpawnManager _spawnManager;
 
@@ -126,11 +128,14 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if (_speedPowerupActive.Count() > 0)
+        if (_shieldPowerupActive.Count() > 0)
         {
-            _speedPowerupActive = _speedPowerupActive.Skip(1).ToList();
-            // Does the coroutine still remove after this?
-            // StopCoroutine(SpeedShutDownRoutine(_powerupCooldownTime));
+            // To Allow more than 1 shield stored
+            _shieldPowerupActive = _shieldPowerupActive.Skip(1).ToList();
+            // Or Only 1 shield
+            // _shieldPowerupActive = new List<float>();
+            _shieldVisualizer.SetActive(false);
+            return;
         }
         else
         {
@@ -183,6 +188,6 @@ public class Player : MonoBehaviour
     public void EnableShieldPowerup()
     {
         _shieldPowerupActive.Add(_powerupCooldownTime); // Currently the number value does nothing. We just check length
-        // StartCoroutine(SpeedShutDownRoutine(_powerupCooldownTime));
+        _shieldVisualizer.SetActive(true);
     }
 }
