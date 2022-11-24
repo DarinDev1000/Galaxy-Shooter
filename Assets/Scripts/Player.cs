@@ -41,6 +41,9 @@ public class Player : MonoBehaviour
     private float _speedPowerupMultiplier = 2.0f;
     [SerializeField]
     private GameObject _shieldVisualizer;
+    private int _score = 0;
+    private UIManager _uiManager;
+
 
     private SpawnManager _spawnManager;
 
@@ -54,6 +57,12 @@ public class Player : MonoBehaviour
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is null");
+        }
+
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is null");
         }
     }
 
@@ -189,5 +198,14 @@ public class Player : MonoBehaviour
     {
         _shieldPowerupActive.Add(_powerupCooldownTime); // Currently the number value does nothing. We just check length
         _shieldVisualizer.SetActive(true);
+    }
+
+    // Add 10 to score
+    // Communicate with UI to update score
+    public void AddScore(int points)
+    {
+        _score += points;
+        // Update UI
+        _uiManager.UpdateScore(_score);
     }
 }
