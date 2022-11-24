@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     // Handle to text
     [SerializeField]
     private TMP_Text _scoreText;
+    [SerializeField]
+    private Sprite[] _liveSprites;
 
     // Start is called before the first frame update
     void Start()
